@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment - AI Placement Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .assessment-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .quiz-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .progress-widget {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-title {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            background: #f3f4f6;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            height: 100%;
+            width: 45%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .timer-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .question-counter {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(226, 239, 250, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .question-counter-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+
+        .question-counter-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .question-number {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .question-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .option.selected {
+            background: #dbeafe;
+            border-color: #2563eb;
+        }
+
+        .option.correct {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .option.incorrect {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option.selected .option-radio,
+        .option.correct .option-radio {
+            border-color: #2563eb;
+            background: #2563eb;
+        }
+
+        .option.selected .option-radio::after,
+        .option.correct .option-radio::after {
+            content: '✓';
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .option-text {
+            flex: 1;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1d4ed8;
+            border: 2px solid #1d4ed8;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #eff6ff;
+        }
+
+        .explanation {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .explanation-text {
+            color: #78350f;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .result-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .result-modal.show {
+            display: flex;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            color: #6b7280;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .result-stats {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .stat-item:not(:last-child) {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 1024px) {
+            .assessment-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                flex-direction: row;
+            }
+
+            .timer, .question-counter {
+                flex: 1;
+            }
+        }
+
+        /* Daily Aptitude Styles */
+        .daily-aptitude-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 244, 0.8) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .streak-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(22, 163, 74, 0.1) 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .streak-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .streak-icon {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .streak-info {
+            text-align: center;
+        }
+
+        .streak-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #16a34a;
+            line-height: 1;
+        }
+
+        .streak-label {
+            font-size: 0.9rem;
+            color: #15803d;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .streak-status {
+            flex: 1;
+            text-align: right;
+        }
+
+        .status-text {
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .aptitude-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .aptitude-question {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-badge {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .question-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .question-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .aptitude-option {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .aptitude-option:hover {
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .aptitude-option.selected {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+
+        .aptitude-option.correct {
+            background: #dcfce7;
+            border-color: #16a34a;
+        }
+
+        .aptitude-option.incorrect {
+            background: #fef2f2;
+            border-color: #dc2626;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .aptitude-option.selected .option-radio,
+        .aptitude-option.correct .option-radio {
+            border-color: #16a34a;
+            background: #16a34a;
+        }
+
+        .aptitude-option.selected .option-radio::after,
+        .aptitude-option.correct .option-radio::after {
+            content: '✓';
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .option-text {
+            flex: 1;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .explanation-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+        }
+
+        .explanation-panel h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .explanation-panel p {
+            color: #78350f;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Daily Aptitude Section -->
+        <div class="daily-aptitude-section">
+            <h1 style="margin-top: 30px; font-size: 2.2rem; font-weight: 800; color: #1f2937;">Daily Aptitude Challenge 🧠</h1>
+            <p style="color: #6b7280; margin-bottom: 30px;">Solve today's aptitude question to maintain your streak! Complete it daily to build consistency.</p>
+
+            <div class="streak-display">
+                <div class="streak-card">
+                    <div class="streak-icon">🔥</div>
+                    <div class="streak-info">
+                        <div class="streak-number" id="currentStreak">0</div>
+                        <div class="streak-label">Day Streak</div>
+                    </div>
+                </div>
+                <div class="streak-status" id="streakStatus">
+                    <span class="status-text">Complete today's question to continue your streak!</span>
+                </div>
+            </div>
+
+            <div class="aptitude-container">
+                <div class="aptitude-question" id="aptitudeQuestion">
+                    <div class="question-header">
+                        <span class="question-badge">Aptitude</span>
+                        <span class="question-date" id="questionDate"></span>
+                    </div>
+                    <h3 class="question-title" id="questionTitle">Loading today's question...</h3>
+                    <div class="question-options" id="questionOptions"></div>
+                    <div class="question-actions">
+                        <button class="btn-primary" id="submitAnswer" onclick="submitAptitudeAnswer()">Submit Answer</button>
+                        <button class="btn-secondary" id="showExplanation" onclick="showAptitudeExplanation()" style="display: none;">Show Explanation</button>
+                    </div>
+                    <div class="explanation-panel" id="explanationPanel" style="display: none;">
+                        <h4>Explanation</h4>
+                        <p id="explanationText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1 style="margin-top: 60px; font-size: 2.2rem; font-weight: 800; color: #1f2937;">Arrays Skill Assessment 📊</h1>
+        <p style="color: #6b7280; margin-bottom: 30px;">Test your knowledge with 10 challenging questions on Arrays. Average time: 15 minutes.</p>
+
+        <div class="assessment-container">
+            <!-- Main Quiz Panel -->
+            <div class="quiz-panel">
+                <div class="question-number">Question 1 of 10</div>
+                
+                <div class="question-title">
+                    What is the time complexity of accessing an element at index i in an array?
+                </div>
+
+                <div class="options-container">
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-text">O(log n)</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-text">O(n)</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-text">O(1)</div>
+                    </div>
+                    <div class="option" onclick="selectOption(this)">
+                        <div class="option-radio"></div>
+                        <div class="option-text">O(n²)</div>
+                    </div>
+                </div>
+
+                <div class="explanation">
+                    <div class="explanation-title">💡 Explanation</div>
+                    <div class="explanation-text">
+                        Arrays use contiguous memory allocation, which allows O(1) constant time access to any element using its index. The memory address is calculated directly as: base_address + (index × element_size).
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="showExplanation()">Submit Answer</button>
+                    <button class="btn-secondary">Skip Question</button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Progress Widget -->
+                <div class="progress-widget">
+                    <div class="progress-title">Assessment Progress</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">1 of 10 completed</div>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer">
+                    <div class="timer-value" id="timer">14:32</div>
+                    <div class="timer-label">Time Remaining</div>
+                </div>
+
+                <!-- Question Counter -->
+                <div class="question-counter">
+                    <div class="question-counter-number">1</div>
+                    <div class="question-counter-label">of 10 Questions</div>
+                </div>
+
+                <!-- Quick Navigation -->
+                <div class="progress-widget">
+                    <div class="progress-title">Quick Navigation</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <button style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">1 ✓</button>
+                        <button style="background: white; border: 2px solid #e5e7eb; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">2</button>
+                        <button style="background: white; border: 2px solid #e5e7eb; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">3</button>
+                        <button style="background: white; border: 2px solid #e5e7eb; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="result-modal" id="resultModal">
+        <div class="result-content">
+            <div class="score-circle">9/10</div>
+            <div class="result-title">Excellent! 🎉</div>
+            <div class="result-message">You've demonstrated strong understanding of array concepts. You're in the top 15% of learners!</div>
+            
+            <div class="result-stats">
+                <div class="stat-item">
+                    <span>Correct Answers:</span>
+                    <strong>9 out of 10</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Time Taken:</span>
+                    <strong>12 minutes 30 seconds</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Skill Level:</span>
+                    <strong style="color: #10b981;">Advanced</strong>
+                </div>
+                <div class="stat-item">
+                    <span>Points Earned:</span>
+                    <strong style="color: #1d4ed8;">50 points</strong>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        // Aptitude Questions Pool
+        const aptitudeQuestions = [
+            {
+                id: 1,
+                question: "If a train travels at 60 km/h, how long will it take to cover 180 km?",
+                options: ["2 hours", "3 hours", "4 hours", "5 hours"],
+                correct: 1,
+                explanation: "Time = Distance/Speed = 180 km / 60 km/h = 3 hours"
+            },
+            {
+                id: 2,
+                question: "What is 25% of 400?",
+                options: ["100", "150", "200", "250"],
+                correct: 0,
+                explanation: "25% of 400 = (25/100) × 400 = 0.25 × 400 = 100"
+            },
+            {
+                id: 3,
+                question: "If 3 apples cost $6, how much do 7 apples cost?",
+                options: ["$12", "$14", "$16", "$18"],
+                correct: 1,
+                explanation: "Cost of 1 apple = $6/3 = $2. Cost of 7 apples = 7 × $2 = $14"
+            },
+            {
+                id: 4,
+                question: "A shopkeeper buys a item for $80 and sells it for $100. What is the profit percentage?",
+                options: ["20%", "25%", "30%", "35%"],
+                correct: 1,
+                explanation: "Profit = Selling Price - Cost Price = $100 - $80 = $20. Profit % = (20/80) × 100 = 25%"
+            },
+            {
+                id: 5,
+                question: "If the ratio of boys to girls in a class is 3:2 and there are 25 students, how many boys are there?",
+                options: ["10", "12", "15", "18"],
+                correct: 2,
+                explanation: "Total parts = 3 + 2 = 5. Boys = (3/5) × 25 = 15"
+            },
+            {
+                id: 6,
+                question: "What is the next number in the sequence: 2, 4, 8, 16, ...?",
+                options: ["24", "32", "28", "30"],
+                correct: 1,
+                explanation: "Each number is multiplied by 2: 2×2=4, 4×2=8, 8×2=16, 16×2=32"
+            },
+            {
+                id: 7,
+                question: "If a man can complete a work in 10 days, how many men are needed to complete it in 2 days?",
+                options: ["4", "5", "6", "8"],
+                correct: 1,
+                explanation: "Work done by 1 man in 1 day = 1/10. For 2 days: 5 men needed (1/10 × 2 × men = 1, so men = 5)"
+            },
+            {
+                id: 8,
+                question: "What is the area of a square with side 12 cm?",
+                options: ["24 cm²", "48 cm²", "144 cm²", "288 cm²"],
+                correct: 2,
+                explanation: "Area of square = side² = 12² = 144 cm²"
+            },
+            {
+                id: 9,
+                question: "If A is 20% more than B, what percentage is B less than A?",
+                options: ["16.67%", "20%", "25%", "30%"],
+                correct: 0,
+                explanation: "If B = 100, A = 120. B is less than A by (20/120)×100 = 16.67%"
+            },
+            {
+                id: 10,
+                question: "A car travels 240 km in 4 hours. What is its average speed?",
+                options: ["50 km/h", "55 km/h", "60 km/h", "65 km/h"],
+                correct: 2,
+                explanation: "Average speed = Total distance / Total time = 240 km / 4 hours = 60 km/h"
+            }
+        ];
+
+        let currentQuestion = null;
+        let selectedOption = null;
+        let streakData = {
+            currentStreak: 0,
+            lastCompletedDate: null,
+            completed: false
+        };
+
+        // Load streak data from API
+        async function loadStreakData() {
+            try {
+                if (api.token) {
+                    const response = await api.getAptitudeStreak();
+                    if (response.success) {
+                        streakData.currentStreak = response.streak.currentStreak;
+                        streakData.lastCompletedDate = response.streak.lastCompletedDate;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load streak data:', error);
+                // Fallback to localStorage if API fails
+                const saved = localStorage.getItem('aptitudeStreak');
+                if (saved) {
+                    const localData = JSON.parse(saved);
+                    streakData.currentStreak = localData.currentStreak || 0;
+                    streakData.lastCompletedDate = localData.lastCompletedDate;
+                }
+            }
+        }
+
+        // Save streak data to API
+        async function saveStreakData() {
+            try {
+                if (api.token) {
+                    // Streak is updated via API when submitting answers
+                    // No need to save locally
+                } else {
+                    // Fallback to localStorage
+                    localStorage.setItem('aptitudeStreak', JSON.stringify(streakData));
+                }
+            } catch (error) {
+                console.error('Failed to save streak data:', error);
+            }
+        }
+
+        // Get today's date in YYYY-MM-DD format
+        function getTodayDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        // Get question for today from API
+        async function getTodaysQuestion() {
+            try {
+                if (api.token) {
+                    const response = await api.getDailyAptitude();
+                    if (response.success) {
+                        streakData.completed = response.completed;
+                        streakData.currentStreak = response.streak;
+                        return {
+                            id: response.question.id,
+                            question: response.question.question,
+                            options: response.question.options,
+                            date: response.question.date
+                        };
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load question from API:', error);
+            }
+            
+            // Fallback to local questions
+            const today = getTodayDate();
+            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const questionIndex = dayOfYear % aptitudeQuestions.length;
+            return aptitudeQuestions[questionIndex];
+        }
+
+        // Check if today's question is completed
+        function isTodaysQuestionCompleted() {
+            return streakData.completed;
+        }
+
+        // Update streak display
+        function updateStreakDisplay() {
+            document.getElementById('currentStreak').textContent = streakData.currentStreak;
+            
+            const statusEl = document.getElementById('streakStatus');
+            if (isTodaysQuestionCompleted()) {
+                statusEl.innerHTML = '<span class="status-text" style="color: #16a34a;">✓ Today\'s question completed! Keep it up!</span>';
+            } else {
+                statusEl.innerHTML = '<span class="status-text">Complete today\'s question to continue your streak!</span>';
+            }
+        }
+
+        // Render question
+        async function renderQuestion() {
+            currentQuestion = await getTodaysQuestion();
+            
+            document.getElementById('questionTitle').textContent = currentQuestion.question;
+            document.getElementById('questionDate').textContent = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            const optionsContainer = document.getElementById('questionOptions');
+            optionsContainer.innerHTML = '';
+            
+            currentQuestion.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'aptitude-option';
+                optionEl.onclick = () => selectAptitudeOption(optionEl, index);
+                optionEl.innerHTML = `
+                    <div class="option-radio"></div>
+                    <div class="option-text">${option}</div>
+                `;
+                optionsContainer.appendChild(optionEl);
+            });
+
+            // Update submit button state
+            const submitBtn = document.getElementById('submitAnswer');
+            if (isTodaysQuestionCompleted()) {
+                submitBtn.textContent = 'Already Completed Today';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.6';
+            } else {
+                submitBtn.textContent = 'Submit Answer';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
+        }
+
+        // Select option
+        function selectAptitudeOption(element, index) {
+            if (isTodaysQuestionCompleted()) return;
+            
+            const parent = element.parentElement;
+            const siblings = parent.querySelectorAll('.aptitude-option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedOption = index;
+        }
+
+        // Submit answer
+        async function submitAptitudeAnswer() {
+            if (selectedOption === null || isTodaysQuestionCompleted()) return;
+            
+            try {
+                if (api.token) {
+                    // Submit via API
+                    const response = await api.submitAptitudeAnswer(currentQuestion.id, selectedOption);
+                    if (response.success) {
+                        if (response.correct) {
+                            const selectedEl = document.querySelector('.aptitude-option.selected');
+                            selectedEl.classList.add('correct');
+                            streakData.completed = true;
+                            streakData.currentStreak = response.streak;
+                            updateStreakDisplay();
+                            showSuccessMessage();
+                        } else {
+                            const options = document.querySelectorAll('.aptitude-option');
+                            const selectedEl = document.querySelector('.aptitude-option.selected');
+                            selectedEl.classList.add('incorrect');
+                            options[response.correctAnswer].classList.add('correct');
+                        }
+                        
+                        document.getElementById('explanationText').textContent = response.explanation;
+                        document.getElementById('explanationPanel').style.display = 'block';
+                        document.getElementById('submitAnswer').style.display = 'none';
+                        document.getElementById('showExplanation').style.display = 'none';
+                    }
+                } else {
+                    // Fallback to local logic
+                    const options = document.querySelectorAll('.aptitude-option');
+                    const selectedEl = document.querySelector('.aptitude-option.selected');
+                    
+                    if (selectedOption === currentQuestion.correct) {
+                        selectedEl.classList.add('correct');
+                        updateLocalStreak();
+                        showSuccessMessage();
+                    } else {
+                        selectedEl.classList.add('incorrect');
+                        options[currentQuestion.correct].classList.add('correct');
+                    }
+                    
+                    document.getElementById('submitAnswer').style.display = 'none';
+                    document.getElementById('showExplanation').style.display = 'inline-block';
+                }
+            } catch (error) {
+                console.error('Failed to submit answer:', error);
+                // Fallback to local logic
+                const options = document.querySelectorAll('.aptitude-option');
+                const selectedEl = document.querySelector('.aptitude-option.selected');
+                
+                if (selectedOption === currentQuestion.correct) {
+                    selectedEl.classList.add('correct');
+                    updateLocalStreak();
+                    showSuccessMessage();
+                } else {
+                    selectedEl.classList.add('incorrect');
+                    options[currentQuestion.correct].classList.add('correct');
+                }
+                
+                document.getElementById('submitAnswer').style.display = 'none';
+                document.getElementById('showExplanation').style.display = 'inline-block';
+            }
+        }
+
+        // Update local streak (fallback)
+        function updateLocalStreak() {
+            const today = getTodayDate();
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+            if (streakData.lastCompletedDate === yesterdayStr) {
+                streakData.currentStreak += 1;
+            } else if (streakData.lastCompletedDate !== today) {
+                streakData.currentStreak = 1;
+            }
+
+            streakData.lastCompletedDate = today;
+            streakData.completed = true;
+            saveStreakData();
+            updateStreakDisplay();
+        }
+
+        // Show explanation
+        function showAptitudeExplanation() {
+            document.getElementById('explanationText').textContent = currentQuestion.explanation;
+            document.getElementById('explanationPanel').style.display = 'block';
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            // You could add a toast notification or modal here
+            console.log('Question completed successfully!');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadStreakData();
+            updateStreakDisplay();
+            await renderQuestion();
+        });
+
+        function selectOption(element) {
+            const parent = element.parentElement;
+            const siblings = parent.querySelectorAll('.option');
+            siblings.forEach(sibling => sibling.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function showExplanation() {
+            const explanation = document.querySelector('.explanation');
+            explanation.classList.add('show');
+            
+            // Simulate answer verification
+            setTimeout(() => {
+                const selectedOption = document.querySelector('.option.selected');
+                if (selectedOption) {
+                    selectedOption.classList.add('correct');
+                }
+                document.querySelector('.btn-primary').textContent = 'Next Question';
+            }, 500);
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').classList.remove('show');
+        }
+
+        // Timer countdown
+        let timeLeft = 14 * 60 + 32; // 14:32 in seconds
+        setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+        }, 1000);
+
+        // Show result after quiz completion
+        setTimeout(() => {
+            // document.getElementById('resultModal').classList.add('show');
+        }, 5000);
+
+        // Quick navigation
+        document.querySelectorAll('.question-counter .progress-widget button').forEach((btn, index) => {
+            if (index > 0) {
+                btn.addEventListener('click', function() {
+                    console.log('Navigate to question', index);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

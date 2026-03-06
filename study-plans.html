@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Plans - AI Placement Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .plan-icon {
+            font-size: 2.5rem;
+        }
+
+        .plan-badge {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-duration {
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .plan-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .plan-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1d4ed8;
+        }
+
+        .stat-name {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .plan-topics {
+            margin-bottom: 20px;
+        }
+
+        .topics-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .btn-start-plan {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-start-plan:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .roadmap-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 50px;
+        }
+
+        .roadmap-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 30px;
+        }
+
+        .roadmap-phase {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .roadmap-phase::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+        }
+
+        .roadmap-phase:nth-child(2)::before {
+            content: '1';
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .roadmap-phase:nth-child(3)::before {
+            content: '2';
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .roadmap-phase:nth-child(4)::before {
+            content: '3';
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .roadmap-phase:nth-child(5)::before {
+            content: '4';
+            font-size: 1rem;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .roadmap-phase::after {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 30px;
+            width: 2px;
+            height: calc(100% + 20px);
+            background: rgba(37, 99, 235, 0.2);
+        }
+
+        .roadmap-phase:last-child::after {
+            display: none;
+        }
+
+        .phase-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .phase-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .phase-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .phase-topic {
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .roadmap-phase {
+                padding-left: 50px;
+            }
+        }
+
+        .difficulty-progress {
+            margin-bottom: 30px;
+        }
+
+        .difficulty-title {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .difficulty-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-name {
+            width: 100px;
+            font-weight: 600;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            background: #f3f4f6;
+            border-radius: 10px;
+            height: 25px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            height: 100%;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: width 0.5s ease;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #fef3c7, #fef08a);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .tip-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .tip-text {
+            color: #78350f;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+              <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📋</span>
+            <h1 class="section-title">Pre-Built Study Plans</h1>
+        </div>
+
+        <p style="color: #6b7280; margin-bottom: 30px; font-size: 1.05rem;">Choose a structured learning path designed by industry experts to prepare for your dream company's interviews.</p>
+
+        <!-- Study Plans Grid -->
+        <div class="plans-grid">
+            <!-- Plan 1: Beginner -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">8 weeks</div>
+                </div>
+                <h3 class="plan-title">Beginner Roadmap</h3>
+                <p class="plan-description">Perfect for students starting their competitive programming journey with zero experience.</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">50+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">15</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Topics Covered:</div>
+                    <span class="topic-tag">Basics</span>
+                    <span class="topic-tag">Arrays</span>
+                    <span class="topic-tag">Strings</span>
+                    <span class="topic-tag">Loops</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('beginner')">Start Plan</button>
+            </div>
+
+            <!-- Plan 2: Intermediate -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">12 weeks</div>
+                </div>
+                <h3 class="plan-title">Intermediate Roadmap</h3>
+                <p class="plan-description">For students with basic programming knowledge ready to tackle medium-level problems.</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">120+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">25</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Topics Covered:</div>
+                    <span class="topic-tag">Trees</span>
+                    <span class="topic-tag">Graphs</span>
+                    <span class="topic-tag">DP</span>
+                    <span class="topic-tag">Recursion</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('intermediate')">Start Plan</button>
+            </div>
+
+            <!-- Plan 3: Advanced -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">16 weeks</div>
+                </div>
+                <h3 class="plan-title">Advanced Roadmap</h3>
+                <p class="plan-description">For experts aiming to crack interviews at top tech companies (FAANG level).</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">250+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">40</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Topics Covered:</div>
+                    <span class="topic-tag">Advanced DP</span>
+                    <span class="topic-tag">System Design</span>
+                    <span class="topic-tag">Data Structures</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('advanced')">Start Plan</button>
+            </div>
+
+            <!-- Plan 4: Company Specific -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">10 weeks</div>
+                </div>
+                <h3 class="plan-title">Company Specific</h3>
+                <p class="plan-description">Targeted preparation for specific companies like Google, Amazon, Microsoft, etc.</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">80+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">20</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Available for:</div>
+                    <span class="topic-tag">Google</span>
+                    <span class="topic-tag">Amazon</span>
+                    <span class="topic-tag">Microsoft</span>
+                    <span class="topic-tag">Meta</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('company')">Select Company</button>
+            </div>
+
+            <!-- Plan 5: Interview Prep -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">6 weeks</div>
+                </div>
+                <h3 class="plan-title">Interview Preparation</h3>
+                <p class="plan-description">Quick refresher course for those already comfortable with coding but need interview tips.</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">40+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">15</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Focus Areas:</div>
+                    <span class="topic-tag">Communication</span>
+                    <span class="topic-tag">Mock Interviews</span>
+                    <span class="topic-tag">Tips & Tricks</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('interview')">Start Plan</button>
+            </div>
+
+            <!-- Plan 6: Revision -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <div class="plan-icon"></div>
+                    <div class="plan-duration">4 weeks</div>
+                </div>
+                <h3 class="plan-title">Quick Revision</h3>
+                <p class="plan-description">Last-minute revision guide covering the most important concepts and problems.</p>
+                
+                <div class="plan-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">30+</div>
+                        <div class="stat-name">Problems</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">10</div>
+                        <div class="stat-name">Topics</div>
+                    </div>
+                </div>
+
+                <div class="plan-topics">
+                    <div class="topics-label">Includes:</div>
+                    <span class="topic-tag">Best Problems</span>
+                    <span class="topic-tag">Cheat Sheets</span>
+                    <span class="topic-tag">Quick Review</span>
+                </div>
+
+                <button class="btn-start-plan" onclick="selectPlan('revision')">Start Plan</button>
+            </div>
+        </div>
+
+        <!-- Roadmap Section -->
+        <div class="roadmap-container">
+            <h2 class="roadmap-title">🗺️ Typical Learning Roadmap</h2>
+
+            <div class="roadmap-phase">
+                <h3 class="phase-title">Phase 1: Foundations (Weeks 1-4)</h3>
+                <p class="phase-description">Build strong foundations with basic data structures and algorithms</p>
+                <div class="phase-topics">
+                    <span class="phase-topic">Array Basics</span>
+                    <span class="phase-topic">String Operations</span>
+                    <span class="phase-topic">Searching & Sorting</span>
+                    <span class="phase-topic">Basic Time Complexity</span>
+                </div>
+            </div>
+
+            <div class="roadmap-phase">
+                <h3 class="phase-title">Phase 2: Core Data Structures (Weeks 5-8)</h3>
+                <p class="phase-description">Master essential data structures used in interviews</p>
+                <div class="phase-topics">
+                    <span class="phase-topic">Linked Lists</span>
+                    <span class="phase-topic">Stacks & Queues</span>
+                    <span class="phase-topic">Hash Tables</span>
+                    <span class="phase-topic">Trees & BST</span>
+                </div>
+            </div>
+
+            <div class="roadmap-phase">
+                <h3 class="phase-title">Phase 3: Advanced Algorithms (Weeks 9-12)</h3>
+                <p class="phase-description">Learn complex algorithms and optimization techniques</p>
+                <div class="phase-topics">
+                    <span class="phase-topic">Dynamic Programming</span>
+                    <span class="phase-topic">Graph Algorithms</span>
+                    <span class="phase-topic">Greedy Algorithms</span>
+                    <span class="phase-topic">Backtracking</span>
+                </div>
+            </div>
+
+            <div class="roadmap-phase">
+                <h3 class="phase-title">Phase 4: Interview Preparation (Week 13+)</h3>
+                <p class="phase-description">Practice mock interviews and solve real company problems</p>
+                <div class="phase-topics">
+                    <span class="phase-topic">Mock Interviews</span>
+                    <span class="phase-topic">System Design</span>
+                    <span class="phase-topic">Behavioral Questions</span>
+                    <span class="phase-topic">Company-Specific Problems</span>
+                </div>
+            </div>
+
+            <div class="difficulty-progress" style="margin-top: 40px;">
+                <div class="difficulty-title">📊 Problem Distribution by Difficulty</div>
+                
+                <div class="difficulty-row">
+                    <div class="difficulty-name">Easy</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%;">30%</div>
+                    </div>
+                </div>
+
+                <div class="difficulty-row">
+                    <div class="difficulty-name">Medium</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%; background: linear-gradient(90deg, #f59e0b, #fbbf24);">50%</div>
+                    </div>
+                </div>
+
+                <div class="difficulty-row">
+                    <div class="difficulty-name">Hard</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 20%; background: linear-gradient(90deg, #ef4444, #f87171);">20%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <div class="tip-title">💡 Pro Tips for Success</div>
+            <div class="tip-text">
+                ✓ Consistency is key: Study daily instead of cramming<br>
+                ✓ Code by hand: Practice writing code on paper before typing<br>
+                ✓ Understand concepts: Don't just memorize solutions<br>
+                ✓ Analyze complexities: Always think about time and space complexity<br>
+                ✓ Join community: Discuss problems and learn from others<br>
+                ✓ Track progress: Monitor your improvement with our dashboard
+            </div>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        function selectPlan(planType) {
+            const planNames = {
+                'beginner': 'Beginner Roadmap',
+                'intermediate': 'Intermediate Roadmap',
+                'advanced': 'Advanced Roadmap',
+                'company': 'Company Specific Preparation',
+                'interview': 'Interview Preparation',
+                'revision': 'Quick Revision'
+            };
+
+            alert(`Starting ${planNames[planType]}! Your personalized study plan has been created.`);
+            // Redirect to dashboard
+            // window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>

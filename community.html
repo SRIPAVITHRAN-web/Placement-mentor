@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - AI Placement Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .community-container {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 25px;
+        }
+
+        .discussions-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .discussion-thread {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .discussion-thread:hover {
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
+            transform: translateX(5px);
+        }
+
+        .thread-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .thread-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .thread-info {
+            flex: 1;
+        }
+
+        .thread-author {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 0.95rem;
+        }
+
+        .thread-time {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        .thread-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .thread-title:hover {
+            color: #2563eb;
+        }
+
+        .thread-preview {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .thread-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .sidebar-widget {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+
+        .widget-title {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .category-count {
+            margin-left: auto;
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-new-discussion {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-new-discussion:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .featured-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(96, 165, 250, 0.05));
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .featured-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .community-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border-color: transparent;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #9ca3af;
+        }
+
+        .btn-close:hover {
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="margin-top: 30px; font-size: 2.2rem; font-weight: 800; color: #1f2937;">Community Discussions 💬</h1>
+        <p style="color: #6b7280; margin-bottom: 30px;">Connect with other learners, discuss problems, share solutions, and get help from the community.</p>
+
+        <!-- Featured Section -->
+        <div class="featured-section">
+            <div class="featured-title">🌟 Community Stats</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">2.5K+</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5.2K+</div>
+                    <div class="stat-label">Discussions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12K+</div>
+                    <div class="stat-label">Helpful Answers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="community-container">
+            <!-- Discussions Panel -->
+            <div class="discussions-panel">
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active">🔥 Hot</button>
+                    <button class="filter-tab">⏱️ Recent</button>
+                    <button class="filter-tab">❓ Unanswered</button>
+                    <button class="filter-tab">⭐ My Posts</button>
+                </div>
+
+                <!-- New Discussion Button -->
+                <button class="btn-new-discussion" onclick="openNewDiscussionModal()">+ Start New Discussion</button>
+
+                <div style="margin-top: 20px;">
+                    <!-- Discussion Thread 1 -->
+                    <div class="discussion-thread" onclick="openThread(1)">
+                        <div class="thread-header">
+                            <div class="thread-avatar">SK</div>
+                            <div class="thread-info">
+                                <div class="thread-author">Sneha Kumar</div>
+                                <div class="thread-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="thread-title">Best approach for solving Two Pointer problems?</div>
+                        <div class="thread-preview">I've been struggling with two-pointer technique. Can anyone explain the intuition behind it with some examples?</div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="tag">Arrays</span>
+                            <span class="tag">Two Pointers</span>
+                        </div>
+                        <div class="thread-meta">
+                            <span>❤️ 15 likes</span>
+                            <span>💬 8 replies</span>
+                            <span>👁️ 234 views</span>
+                        </div>
+                    </div>
+
+                    <!-- Discussion Thread 2 -->
+                    <div class="discussion-thread" onclick="openThread(2)">
+                        <div class="thread-header">
+                            <div class="thread-avatar" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">RG</div>
+                            <div class="thread-info">
+                                <div class="thread-author">Raj Gupta</div>
+                                <div class="thread-time">5 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="thread-title">Dynamic Programming Memoization vs Tabulation - Which one to use?</div>
+                        <div class="thread-preview">I'm confused about when to use memoization vs tabulation approach in DP problems. What's the practical difference?</div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="tag">Dynamic Programming</span>
+                            <span class="tag">Optimization</span>
+                        </div>
+                        <div class="thread-meta">
+                            <span>❤️ 12 likes</span>
+                            <span>💬 6 replies</span>
+                            <span>👁️ 189 views</span>
+                        </div>
+                    </div>
+
+                    <!-- Discussion Thread 3 -->
+                    <div class="discussion-thread" onclick="openThread(3)">
+                        <div class="thread-header">
+                            <div class="thread-avatar" style="background: linear-gradient(135deg, #10b981, #34d399);">PR</div>
+                            <div class="thread-info">
+                                <div class="thread-author">Priya Rao</div>
+                                <div class="thread-time">8 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="thread-title">Interview Experience: Google Coding Round</div>
+                        <div class="thread-preview">Just completed my Google coding interview! Let me share my experience and tips that helped me prepare effectively. Ask me anything!</div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="tag">Interview</span>
+                            <span class="tag">Google</span>
+                            <span class="tag">Experience</span>
+                        </div>
+                        <div class="thread-meta">
+                            <span>❤️ 45 likes</span>
+                            <span>💬  23 replies</span>
+                            <span>👁️ 892 views</span>
+                        </div>
+                    </div>
+
+                    <!-- Discussion Thread 4 -->
+                    <div class="discussion-thread" onclick="openThread(4)">
+                        <div class="thread-header">
+                            <div class="thread-avatar" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">AK</div>
+                            <div class="thread-info">
+                                <div class="thread-author">Arjun Kapoor</div>
+                                <div class="thread-time">12 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="thread-title">Time Complexity: Why is my solution O(n²) when it should be O(n)?</div>
+                        <div class="thread-preview">My solution works correctly but it's too slow on large test cases. I'm using nested loops. How can I optimize to O(n)?</div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="tag">Help Needed</span>
+                            <span class="tag">Optimization</span>
+                        </div>
+                        <div class="thread-meta">
+                            <span>❤️ 8 likes</span>
+                            <span>💬  5 replies</span>
+                            <span>👁️ 156 views</span>
+                        </div>
+                    </div>
+
+                    <!-- Discussion Thread 5 -->
+                    <div class="discussion-thread" onclick="openThread(5)">
+                        <div class="thread-header">
+                            <div class="thread-avatar" style="background: linear-gradient(135deg, #ec4899, #f472b6);">ZM</div>
+                            <div class="thread-info">
+                                <div class="thread-author">Zara Malik</div>
+                                <div class="thread-time">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="thread-title">System Design: Designing a URL Shortener</div>
+                        <div class="thread-preview">Let's discuss the architecture, database design, and scalability considerations for building a URL shortener service like bit.ly.</div>
+                        <div style="margin-bottom: 10px;">
+                            <span class="tag">System Design</span>
+                            <span class="tag">Architecture</span>
+                        </div>
+                        <div class="thread-meta">
+                            <span>❤️ 32 likes</span>
+                            <span>💬  14 replies</span>
+                            <span>👁️ 567 views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div>
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">📂 Categories</div>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <span>Arrays & Strings</span>
+                            <div class="category-count">456</div>
+                        </div>
+                        <div class="category-item">
+                            <span>Trees & Graphs</span>
+                            <div class="category-count">289</div>
+                        </div>
+                        <div class="category-item">
+                            <span>Dynamic Programming</span>
+                            <div class="category-count">234</div>
+                        </div>
+                        <div class="category-item">
+                            <span>System Design</span>
+                            <div class="category-count">178</div>
+                        </div>
+                        <div class="category-item">
+                            <span>Interview Tips</span>
+                            <div class="category-count">245</div>
+                        </div>
+                        <div class="category-item">
+                            <span>Career Advice</span>
+                            <div class="category-count">167</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Tags -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">🏷️ Popular Tags</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="tag">LeetCode</span>
+                        <span class="tag">HackerRank</span>
+                        <span class="tag">Interview</span>
+                        <span class="tag">Help</span>
+                        <span class="tag">Tips</span>
+                        <span class="tag">Google</span>
+                        <span class="tag">Amazon</span>
+                    </div>
+                </div>
+
+                <!-- Top Contributors -->
+                <div class="sidebar-widget">
+                    <div class="widget-title">⭐ Top Contributors</div>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <span>👨‍💻 Vikram Singh</span>
+                            <div class="category-count">2.5K</div>
+                        </div>
+                        <div class="category-item">
+                            <span>👩‍💻 Priya Sharma</span>
+                            <div class="category-count">1.8K</div>
+                        </div>
+                        <div class="category-item">
+                            <span>👨‍💻 Abhishek Patel</span>
+                            <div class="category-count">1.5K</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Discussion -->
+    <div class="modal" id="newDiscussionModal">
+        <div class="modal-content">
+            <button class="btn-close" onclick="closeNewDiscussionModal()">×</button>
+            <div class="modal-title">Start a New Discussion</div>
+            
+            <form onsubmit="submitDiscussion(event)">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" placeholder="What's your question or discussion topic?" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" placeholder="Provide more details about your question or topic..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-input">
+                        <option>Arrays & Strings</option>
+                        <option>Trees & Graphs</option>
+                        <option>Dynamic Programming</option>
+                        <option>System Design</option>
+                        <option>Interview Tips</option>
+                        <option>Career Advice</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tags (comma separated)</label>
+                    <input type="text" class="form-input" placeholder="e.g., LeetCode, Help, Interview">
+                </div>
+
+                <button type="submit" class="btn-submit">Post Discussion</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        function openNewDiscussionModal() {
+            document.getElementById('newDiscussionModal').classList.add('show');
+        }
+
+        function closeNewDiscussionModal() {
+            document.getElementById('newDiscussionModal').classList.remove('show');
+        }
+
+        function submitDiscussion(event) {
+            event.preventDefault();
+            alert('Discussion posted successfully!');
+            closeNewDiscussionModal();
+        }
+
+        function openThread(threadId) {
+            console.log('Opening thread', threadId);
+            // Would navigate to thread detail page
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Category filter
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const category = this.textContent.split('\n')[0].trim();
+                console.log('Filter by category:', category);
+            });
+        });
+    </script>
+</body>
+</html>

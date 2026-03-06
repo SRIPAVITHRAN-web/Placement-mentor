@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - AI Placement Mentor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .resource-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border-color: transparent;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+        }
+
+        .resource-thumbnail {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .resource-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-type {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .resource-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(37, 99, 235, 0.1);
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .resource-duration {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .resource-difficulty {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .difficulty-beginner {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .difficulty-intermediate {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-advanced {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-access {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-access:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+            margin-top: -20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(219, 234, 254, 0.5) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-filter {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .section-icon {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section-header">
+            <span class="section-icon">📚</span>
+            <h1 class="section-title">Learning Resources</h1>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-number">250+</div>
+                <div class="stat-label">Tutorial Videos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Articles & Blogs</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Code Templates</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Interview Guides</div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="resource-filter">
+            <button class="filter-btn active">All Resources</button>
+            <button class="filter-btn">📹 Videos</button>
+            <button class="filter-btn">📝 Articles</button>
+            <button class="filter-btn">💻 Code Templates</button>
+            <button class="filter-btn">🎤 Interviews</button>
+        </div>
+
+        <!-- Video Tutorials Section -->
+        <div class="section-header">
+            <span class="section-icon">📹</span>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0;">Video Tutorials</h2>
+        </div>
+
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-thumbnail">🎥</div>
+                <div class="resource-content">
+                    <span class="resource-type">Video Tutorial</span>
+                    <h3 class="resource-title">Arrays & Lists Complete Guide</h3>
+                    <p class="resource-description">Learn everything about arrays from basics to advanced operations with real-world examples and practice problems.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 2h 30min</div>
+                        <div class="resource-difficulty difficulty-beginner">Beginner</div>
+                    </div>
+                    <button class="btn-access">▶ Watch Now</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail">🎥</div>
+                <div class="resource-content">
+                    <span class="resource-type">Video Tutorial</span>
+                    <h3 class="resource-title">Dynamic Programming Masterclass</h3>
+                    <p class="resource-description">Master dynamic programming with step-by-step explanations, practice problems, and optimization techniques.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 4h 15min</div>
+                        <div class="resource-difficulty difficulty-advanced">Advanced</div>
+                    </div>
+                    <button class="btn-access">▶ Watch Now</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail">🎥</div>
+                <div class="resource-content">
+                    <span class="resource-type">Video Tutorial</span>
+                    <h3 class="resource-title">Graph Algorithms Explained</h3>
+                    <p class="resource-description">Understand BFS, DFS, Dijkstra's algorithm, and other essential graph algorithms for coding interviews.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 3h 45min</div>
+                        <div class="resource-difficulty difficulty-intermediate">Intermediate</div>
+                    </div>
+                    <button class="btn-access">▶ Watch Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Articles Section -->
+        <div class="section-header">
+            <span class="section-icon">📝</span>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0;">Articles & Blogs</h2>
+        </div>
+
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Article</span>
+                    <h3 class="resource-title">Two-Pointer Technique Guide</h3>
+                    <p class="resource-description">In-depth guide on the two-pointer technique with 10+ solved problems and common patterns.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 15 min read</div>
+                        <div class="resource-difficulty difficulty-beginner">Beginner</div>
+                    </div>
+                    <button class="btn-access">📖 Read Article</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Article</span>
+                    <h3 class="resource-title">Binary Search Optimization</h3>
+                    <p class="resource-description">Advanced binary search techniques including modified binary search and edge case handling.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 20 min read</div>
+                        <div class="resource-difficulty difficulty-intermediate">Intermediate</div>
+                    </div>
+                    <button class="btn-access">📖 Read Article</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Article</span>
+                    <h3 class="resource-title">System Design Fundamentals</h3>
+                    <p class="resource-description">Learn scalability, load balancing, databases, and caching for system design interviews.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">⏱️ 45 min read</div>
+                        <div class="resource-difficulty difficulty-advanced">Advanced</div>
+                    </div>
+                    <button class="btn-access">📖 Read Article</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Templates Section -->
+        <div class="section-header">
+            <span class="section-icon">💻</span>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0;">Code Templates</h2>
+        </div>
+
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #10b981, #34d399);">⚙️</div>
+                <div class="resource-content">
+                    <span class="resource-type">Code Template</span>
+                    <h3 class="resource-title">Binary Search Template</h3>
+                    <p class="resource-description">Reusable binary search template with different variations for left/right boundary searches.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Python, Java, C++</div>
+                    </div>
+                    <button class="btn-access">💻 Copy Template</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #10b981, #34d399);">⚙️</div>
+                <div class="resource-content">
+                    <span class="resource-type">Code Template</span>
+                    <h3 class="resource-title">Tree Traversal Methods</h3>
+                    <p class="resource-description">Complete templates for DFS, BFS, in-order, pre-order, post-order traversals with explanations.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Python, Java, C++</div>
+                    </div>
+                    <button class="btn-access">💻 Copy Template</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #10b981, #34d399);">⚙️</div>
+                <div class="resource-content">
+                    <span class="resource-type">Code Template</span>
+                    <h3 class="resource-title">Union-Find (Disjoint Set)</h3>
+                    <p class="resource-description">Optimized Union-Find implementation with path compression and union by rank.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Python, Java, C++</div>
+                    </div>
+                    <button class="btn-access">💻 Copy Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Guides Section -->
+        <div class="section-header">
+            <span class="section-icon">🎤</span>
+            <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0;">Interview Preparation</h2>
+        </div>
+
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Interview Guide</span>
+                    <h3 class="resource-title">FAANG Interview Guide</h3>
+                    <p class="resource-description">Complete preparation guide for Facebook, Apple, Amazon, Netflix, Google interviews with strategies.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Comprehensive</div>
+                    </div>
+                    <button class="btn-access">🎯 View Guide</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Interview Guide</span>
+                    <h3 class="resource-title">Behavioral Interview Tips</h3>
+                    <p class="resource-description">Master the art of answering behavioral questions with real examples and structured approaches.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Comprehensive</div>
+                    </div>
+                    <button class="btn-access">🎯 View Guide</button>
+                </div>
+            </div>
+
+            <div class="resource-card">
+                <div class="resource-thumbnail" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">📖</div>
+                <div class="resource-content">
+                    <span class="resource-type">Interview Guide</span>
+                    <h3 class="resource-title">Startup Interview Strategies</h3>
+                    <p class="resource-description">Unique strategies for interviews at startups including negotiation and equity evaluation.</p>
+                    <div class="resource-meta">
+                        <div class="resource-duration">Comprehensive</div>
+                    </div>
+                    <button class="btn-access">🎯 View Guide</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                console.log('Filtered by:', this.textContent);
+            });
+        });
+    </script>
+</body>
+</html>

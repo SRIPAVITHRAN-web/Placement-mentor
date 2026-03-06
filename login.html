@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - AI Placement Mentor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure login to access your personalized AI-powered coding dashboard and placement preparation tools.">
+    <meta name="keywords" content="login, authentication, dashboard, AI mentor">
+    <meta name="author" content="AI Placement Mentor Team">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Hero Section -->
+    <section class="login-hero">
+        <div class="animated-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+        </div>
+        <div class="login-container-wrapper">
+            <div class="login-content">
+                <div class="login-text">
+                    <div class="hero-badge">🔐 Secure Access Portal</div>
+                    <h1>Welcome Back, <span class="gradient-text">Future Developer</span></h1>
+                    <p>
+                        Access your personalized AI-powered learning dashboard.
+                        Continue your journey towards placement success with intelligent recommendations
+                        and progress tracking.
+                    </p>
+
+                    <div class="login-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <span>Personalized Tasks</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <span>Progress Analytics</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔥</span>
+                            <span>Streak Tracking</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-form-container">
+                    <div class="login-card">
+                        <div class="login-header">
+                            <h2>Access Your Account</h2>
+                            <p>Sign in to continue your learning journey</p>
+                        </div>
+
+                        <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <div class="input-wrapper">
+                                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <div class="input-wrapper">
+                                    <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-options">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" name="remember">
+                                    <span class="checkmark"></span>
+                                    Remember me
+                                </label>
+                                <a href="#" class="forgot-link">Forgot password?</a>
+                            </div>
+
+                            <button type="submit" class="login-btn" id="loginBtn">
+                                <span class="btn-text">Access Dashboard</span>
+                                <span class="btn-icon">→</span>
+                            </button>
+                        </form>
+
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+
+                        <div class="social-login">
+                            <button class="social-btn google">
+                                <span class="social-icon">🌐</span>
+                                Continue with Google
+                            </button>
+                            <button class="social-btn github">
+                                <span class="social-icon">💻</span>
+                                Continue with GitHub
+                            </button>
+                        </div>
+
+                        <div class="signup-prompt">
+                            <p>New to AI Mentor? <a href="#" onclick="openSignupModal(event)">Create Account</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Preview -->
+    <section class="features-preview">
+        <div class="section-label">✨ Why Choose AI Mentor</div>
+        <div class="preview-container">
+            <div class="preview-card">
+                <div class="preview-icon">🧠</div>
+                <h3>AI-Powered Learning</h3>
+                <p>Advanced algorithms adapt to your learning style and pace</p>
+            </div>
+            <div class="preview-card">
+                <div class="preview-icon">🎯</div>
+                <h3>Targeted Practice</h3>
+                <p>Focus on your weak areas with personalized problem recommendations</p>
+            </div>
+            <div class="preview-card">
+                <div class="preview-icon">📈</div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your improvement with detailed analytics and insights</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">⚡</span>
+                <span>AI Placement Mentor</span>
+            </div>
+            <p>© 2026 AI Placement Mentor | Smart Coding Preparation System</p>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="features.html">Features</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger?.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+
+            // Add floating animations
+            addFloatingAnimations();
+
+            // Check if user is already logged in
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Handle Login Form Submission
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = loginBtn.querySelector('.btn-text');
+
+            // Validation
+            if (!email || !password) {
+                showNotification('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showNotification('Please enter a valid email', 'error');
+                return;
+            }
+
+            // Disable button and show loading state
+            loginBtn.disabled = true;
+            btnText.innerHTML = '⏳ Authenticating...';
+
+            // Send login request to backend
+            fetch(`${API_BASE_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Store token
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    btnText.innerHTML = '✓ Welcome!';
+                    btnText.style.color = '#00f2fe';
+                    showNotification(`Welcome back, ${data.user.username}!`, 'success');
+
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    btnText.innerHTML = 'Access Dashboard';
+                    loginBtn.disabled = false;
+                    
+                    // Provide specific error messages
+                    let errorMsg = data.message || 'Login failed';
+                    
+                    if (data.message && data.message.toLowerCase().includes('not found')) {
+                        errorMsg = '❌ User not registered. Please create an account first!';
+                    } else if (data.message && data.message.toLowerCase().includes('invalid')) {
+                        errorMsg = '❌ Invalid email or password. Please try again.';
+                    } else if (data.message && data.message.toLowerCase().includes('deactivated')) {
+                        errorMsg = '❌ Your account has been deactivated. Please contact support.';
+                    }
+                    
+                    showNotification(errorMsg, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Login error:', error);
+                btnText.innerHTML = 'Access Dashboard';
+                loginBtn.disabled = false;
+                
+                // Check if backend is running
+                if (error.message.includes('Failed to fetch')) {
+                    showNotification('❌ Backend server is not running. Please start the server first.', 'error');
+                } else {
+                    showNotification('❌ Network error. Please check your connection.', 'error');
+                }
+            });
+        }
+
+        // Open Signup Modal
+        function openSignupModal(event) {
+            event.preventDefault();
+            
+            const modal = document.createElement('div');
+            modal.id = 'signupModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10001;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    border-radius: 20px;
+                    padding: 40px;
+                    max-width: 450px;
+                    width: 95%;
+                    max-height: 90vh;
+                    overflow-y: auto;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                ">
+                    <h2 style="
+                        font-size: 28px;
+                        font-weight: 700;
+                        margin-bottom: 10px;
+                        color: #0f3a7d;
+                    ">Create Your Account</h2>
+                    <p style="
+                        color: #6b7280;
+                        margin-bottom: 30px;
+                        font-size: 14px;
+                    ">Join thousands of students preparing for placements</p>
+
+                    <form id="signupForm" onsubmit="handleSignup(event)" style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div>
+                                <label style="font-weight: 600; font-size: 14px; color: #1f2937;">First Name</label>
+                                <input type="text" name="firstName" placeholder="John" style="
+                                    width: 100%;
+                                    padding: 10px 12px;
+                                    border: 2px solid #e5e7eb;
+                                    border-radius: 8px;
+                                    font-size: 14px;
+                                    outline: none;
+                                    transition: 0.3s;
+                                " required>
+                            </div>
+                            <div>
+                                <label style="font-weight: 600; font-size: 14px; color: #1f2937;">Last Name</label>
+                                <input type="text" name="lastName" placeholder="Doe" style="
+                                    width: 100%;
+                                    padding: 10px 12px;
+                                    border: 2px solid #e5e7eb;
+                                    border-radius: 8px;
+                                    font-size: 14px;
+                                    outline: none;
+                                    transition: 0.3s;
+                                " required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="font-weight: 600; font-size: 14px; color: #1f2937;">Username</label>
+                            <input type="text" name="username" placeholder="johndoe123" style="
+                                width: 100%;
+                                padding: 10px 12px;
+                                border: 2px solid #e5e7eb;
+                                border-radius: 8px;
+                                font-size: 14px;
+                                outline: none;
+                                transition: 0.3s;
+                                box-sizing: border-box;
+                            " required minlength="3">
+                        </div>
+
+                        <div>
+                            <label style="font-weight: 600; font-size: 14px; color: #1f2937;">Email</label>
+                            <input type="email" name="email" placeholder="john@example.com" style="
+                                width: 100%;
+                                padding: 10px 12px;
+                                border: 2px solid #e5e7eb;
+                                border-radius: 8px;
+                                font-size: 14px;
+                                outline: none;
+                                transition: 0.3s;
+                                box-sizing: border-box;
+                            " required>
+                        </div>
+
+                        <div>
+                            <label style="font-weight: 600; font-size: 14px; color: #1f2937;">Password</label>
+                            <input type="password" name="password" placeholder="Min 6 chars, 1 uppercase, 1 number" style="
+                                width: 100%;
+                                padding: 10px 12px;
+                                border: 2px solid #e5e7eb;
+                                border-radius: 8px;
+                                font-size: 14px;
+                                outline: none;
+                                transition: 0.3s;
+                                box-sizing: border-box;
+                            " required minlength="6">
+                        </div>
+
+                        <div>
+                            <label class="checkbox-container" style="display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer;">
+                                <input type="checkbox" name="agree" required style="width: 16px; height: 16px;">
+                                <span>I agree to the Terms of Service and Privacy Policy</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" style="
+                            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                            color: white;
+                            border: none;
+                            padding: 12px;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: 0.3s;
+                            margin-top: 10px;
+                        ">Create Account</button>
+
+                        <p style="text-align: center; font-size: 14px; color: #6b7280;">
+                            Already have an account? <a href="#" onclick="closeSignupModal()" style="color: #2563eb; text-decoration: none; font-weight: 600;">Login</a>
+                        </p>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            
+            // Add fade in animation
+            const style = document.createElement('style');
+            style.textContent = '@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }';
+            document.head.appendChild(style);
+
+            // Close modal on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeSignupModal();
+                }
+            });
+        }
+
+        // Close Signup Modal
+        function closeSignupModal() {
+            const modal = document.getElementById('signupModal');
+            if (modal) {
+                modal.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        // Handle Signup Form Submission
+        async function handleSignup(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: formData.get('password')
+            };
+
+            // Validation
+            if (!data.username || data.username.length < 3) {
+                showNotification('Username must be at least 3 characters', 'error');
+                return;
+            }
+
+            if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(data.password)) {
+                showNotification('Password must contain uppercase, lowercase, and a number', 'error');
+                return;
+            }
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '⏳ Creating Account...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('Account created successfully! Logging you in...', 'success');
+                    
+                    // Auto login
+                    localStorage.setItem('authToken', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+
+                    setTimeout(() => {
+                        closeSignupModal();
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showNotification(result.message || 'Registration failed', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Create Account';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showNotification('Network error. Please try again.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Create Account';
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'linear-gradient(135deg, #00f2fe, #4facfe)' : 'linear-gradient(135deg, #ff6b6b, #ff8787)';
+            const textColor = type === 'success' ? '#0f2027' : 'white';
+
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${bgColor};
+                color: ${textColor};
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideInRight 0.5s ease;
+                font-family: 'Poppins', sans-serif;
+            `;
+            notification.innerHTML = `<span style="font-size: 18px; margin-right: 10px;">${type === 'success' ? '✓' : '⚠'}</span>${message}`;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, 3000);
+        }
+
+        function addFloatingAnimations() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                particle.style.animation = `float 8s ease-in-out infinite`;
+                particle.style.animationDelay = `${index * 2}s`;
+            });
+        }
+    </script>
+
+</body>
+</html>

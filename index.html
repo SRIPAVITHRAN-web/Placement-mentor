@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Placement Mentor - Your Smart Coding Companion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered coding platform for placement preparation with personalized tasks, streak tracking, and multi-platform integration.">
+    <meta name="keywords" content="coding, placement, AI, LeetCode, HackerRank, programming, interview preparation">
+    <meta name="author" content="AI Placement Mentor Team">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🚀</span>
+                AI Placement Mentor
+            </div>
+            <ul class="nav-menu nav-menu-active">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="assessment.html" class="nav-link">Assessment</a></li>
+                <li class="nav-item"><a href="study-plans.html" class="nav-link">Study Plans</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link nav-link-btn">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="animated-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+        <div class="hero-container">
+
+            <!-- Left Content -->
+            <div class="hero-text">
+                <div class="hero-badge">✨ Powered by Advanced AI</div>
+                <h1>Build Your <span class="gradient-text">Placement Confidence</span> With AI</h1>
+                <p>
+                    Daily AI-powered coding recommendations, streak motivation, and progress tracking 
+                    to accelerate your placement success with LeetCode, HackerRank, and more.
+                </p>
+
+                <div class="btn-group">
+                    <button class="btn primary" onclick="scrollToTasks()">Get Daily Tasks</button>
+                    <button class="btn secondary" onclick="window.location.href='features.html'">View Features</button>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <strong>50K+</strong>
+                        <span>Students</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>10K+</strong>
+                        <span>Problems</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>95%</strong>
+                        <span>Success Rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Animated Dashboard -->
+            <div class="dashboard-preview">
+                <div class="app-preview">
+                    <div class="dashboard-header">
+                        <div class="avatar">👨‍💻</div>
+                        <h3>Dashboard</h3>
+                    </div>
+
+                    <div class="stat glass">
+                        <div class="stat-icon">🔥</div>
+                        <div>
+                            <span>Streak</span>
+                            <strong>12 Days</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat glass">
+                        <div class="stat-icon">⏱️</div>
+                        <div>
+                            <span>Today's Time</span>
+                            <strong>45 min</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat glass">
+                        <div class="stat-icon">🎯</div>
+                        <div>
+                            <span>Today's Task</span>
+                            <strong>2 Medium</strong>
+                        </div>
+                    </div>
+
+                    <div class="stat glass">
+                        <div class="stat-icon">📊</div>
+                        <div>
+                            <span>Weekly</span>
+                            <strong class="accent">420 min</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Elements -->
+                <div class="floating-element el-1">⚡</div>
+                <div class="floating-element el-2">⭐</div>
+                <div class="floating-element el-3">🎯</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Daily Tasks Section -->
+    <section class="daily-tasks" id="tasks">
+        <div class="section-label">🎯 Personalized Learning</div>
+        <div class="tasks-container">
+            <div class="section-header">
+                <h2>Your Daily AI Tasks</h2>
+                <p>Personalized problems recommended based on your weak areas</p>
+            </div>
+
+            <div class="tasks-grid">
+                <!-- Task 1 -->
+                <div class="task-card" style="animation-delay: 0.1s">
+                    <div class="card-glow"></div>
+                    <div class="task-header">
+                        <span class="platform-badge leetcode">LeetCode</span>
+                        <span class="a">Medium</span>
+                    </div>
+                    <h3>Two Sum Array</h3>
+                    <p>Arrays & Hashing - Optimize your approach</p>
+                    <div class="task-meta">
+                        <span>⏱️ 30 min</span>
+                        <span>⭐ Your Weak Area</span>
+                    </div>
+                    <button class="task-btn" onclick="handleTaskClick('Two Sum', 'https://www.leetcode.com')">Start Problem →</button>
+                </div>
+
+                <!-- Task 2 -->
+                <div class="task-card" style="animation-delay: 0.2s">
+                    <div class="card-glow"></div>
+                    <div class="task-header">
+                        <span class="platform-badge hackerrank">HackerRank</span>
+                        <span class="a">Easy</span>
+                    </div>
+                    <h3>Tree Traversal Basics</h3>
+                    <p>Trees & Graphs - Build fundamentals</p>
+                    <div class="task-meta">
+                        <span>⏱️ 20 min</span>
+                        <span>🟢 Warm-up</span>
+                    </div>
+                    <button class="task-btn" onclick="handleTaskClick('Tree Traversal', 'https://www.hackerrank.com/dashboard')">Start Problem →</button>
+                </div>
+
+                <!-- Task 3 -->
+                <div class="task-card" style="animation-delay: 0.3s">
+                    <div class="card-glow"></div>
+                    <div class="task-header">
+                        <span class="platform-badge codechef">CodeChef</span>
+                        <span class="a">Hard</span>
+                    </div>
+                    <h3>Dynamic Programming Challenge</h3>
+                    <p>Recursion & DP - Your strength area</p>
+                    <div class="task-meta">
+                        <span>⏱️ 60 min</span>
+                        <span>🚀 Challenge Yourself</span>
+                    </div>
+                    <button class="task-btn" onclick="handleTaskClick('DP Challenge', 'https://www.codechef.com/dashboard')">Start Problem →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Streak & Time Tracker Section -->
+    <section class="tracker-section">
+        <div class="section-label">📊 Track Your Progress</div>
+        <h2>Your Performance Metrics</h2>
+        <div class="tracker-container">
+            <div class="tracker-card" style="animation-delay: 0.1s">
+                <div class="tracker-icon">🔥</div>
+                <h3>Current Streak</h3>
+                <p class="tracker-value">12</p>
+                <p class="tracker-subtitle">Days</p>
+                <p class="tracker-text">Keep it going! Consistency is key.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+
+            <div class="tracker-card" style="animation-delay: 0.2s">
+                <div class="tracker-icon">⏰</div>
+                <h3>Weekly Time</h3>
+                <p class="tracker-value">420</p>
+                <p class="tracker-subtitle">Minutes</p>
+                <p class="tracker-text">Your recommended daily goal: 45 min</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 88%;"></div>
+                </div>
+            </div>
+
+            <div class="tracker-card" style="animation-delay: 0.3s">
+                <div class="tracker-icon">📈</div>
+                <h3>Task Completion</h3>
+                <p class="tracker-value">18</p>
+                <p class="tracker-subtitle">Out of 21</p>
+                <p class="tracker-text">85% completion rate - Excellent!</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <div class="tracker-card" style="animation-delay: 0.4s">
+                <div class="tracker-icon">🎖️</div>
+                <h3>Accuracy Rate</h3>
+                <p class="tracker-value">87</p>
+                <p class="tracker-subtitle">Percent</p>
+                <p class="tracker-text">You're improving! Keep solving.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 87%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Placement Journey?</h2>
+            <p>Join thousands of students achieving their goals with AI-powered guidance.</p>
+            <div class="cta-buttons">
+                <button class="btn primary large" onclick="handleSignUp()">Start Free Today</button>
+                <button class="btn secondary large" onclick="window.location.href='features.html'">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>AI Mentor</h4>
+                <p>Empowering students with AI-powered placement preparation.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 AI Placement Mentor | Smart Coding Preparation System
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll to tasks
+        function scrollToTasks() {
+            const tasksSection = document.getElementById('tasks');
+            tasksSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Enhanced task click with better UX and platform redirect
+        function handleTaskClick(taskName, platformUrl) {
+            // Create a modal or notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #00f2fe, #4facfe);
+                color: #0f2027;
+                padding: 20px 30px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,242,254,0.3);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideInRight 0.5s ease;
+                max-width: 400px;
+                font-family: 'Poppins', sans-serif;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 24px;">🚀</span>
+                    <div>
+                        <div style="font-size: 16px; margin-bottom: 5px;">Starting: ${taskName}</div>
+                        <div style="font-size: 14px; opacity: 0.8;">Opening coding platform...</div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Redirect to platform after 1.5 seconds
+            setTimeout(() => {
+                if (platformUrl) {
+                    window.open(platformUrl, '_blank');
+                }
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, 1500);
+        }
+
+        // Handle signup
+        function handleSignUp() {
+            window.location.href = 'login.html';
+        }
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+
+            // Animate stats on load
+            animateStats();
+        });
+
+        // Animate counter statistics
+        function animateStats() {
+            const statItems = document.querySelectorAll('.stat-item strong');
+            statItems.forEach((item, index) => {
+                const finalValue = parseInt(item.textContent);
+                const duration = 2000;
+                const start = Date.now();
+
+                const animate = () => {
+                    const elapsed = Date.now() - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const value = Math.floor(finalValue * progress);
+                    item.textContent = value.toLocaleString() + (index === 2 ? '%' : '+');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+
+                animate();
+            });
+        }
+
+        // Add scroll animation for cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeUp 0.6s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.task-card, .tracker-card, .platform-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- AI Chat Prototype Widget -->
+    <button id="chatToggleBtn" class="chat-toggle" title="AI Chat">💬</button>
+    <div id="aiChatWidget" class="chat-widget">
+        <div class="chat-header">
+            <span>AI Chat (prototype)</span>
+            <button id="chatCloseBtn" aria-label="Close chat">&times;</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot">Hello! I'm a AI tutor. Ask me for tips or guidance. (Restricted knowledge)</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInputField" placeholder="Type your question..." />
+            <button id="chatSendBtn">Send</button>
+        </div>
+        <div class="chat-footer">
+            <small>Prototype – limited knowledge & responses.</small>
+        </div>
+    </div>
+
+    <script>
+        // Simple UI logic for prototype chat widget
+        const chatToggleBtn = document.getElementById('chatToggleBtn');
+        const chatWidget = document.getElementById('aiChatWidget');
+        const chatCloseBtn = document.getElementById('chatCloseBtn');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const chatInputField = document.getElementById('chatInputField');
+        const chatBody = document.getElementById('chatBody');
+
+        chatToggleBtn.addEventListener('click', () => {
+            chatWidget.style.display = 'flex';
+            chatToggleBtn.style.display = 'none';
+            chatInputField.focus();
+        });
+
+        chatCloseBtn.addEventListener('click', () => {
+            chatWidget.style.display = 'none';
+            chatToggleBtn.style.display = 'block';
+        });
+
+        function appendMessage(text, sender) {
+            const msg = document.createElement('div');
+            msg.className = 'chat-message ' + sender;
+            msg.textContent = text;
+            chatBody.appendChild(msg);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        chatSendBtn.addEventListener('click', () => {
+            const text = chatInputField.value.trim();
+            if (!text) return;
+            appendMessage(text, 'user');
+            chatInputField.value = '';
+            // prototype response
+            setTimeout(() => {
+                appendMessage('This is a prototype chat. I can only offer basic encouragement: keep practicing daily and explore the features!', 'bot');
+            }, 800);
+        });
+
+        // allow enter key
+        chatInputField.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                chatSendBtn.click();
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>
